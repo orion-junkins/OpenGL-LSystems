@@ -13,8 +13,6 @@ void drawUnitLineSegment();
 
 typedef struct Point{
 	float x, y, z;		// coordinates
-	// float nx, ny, nz;	// surface normal
-	// float s, t;		// texture coords
 } Point;
 
 Point newPoint(float a, float b, float c) {
@@ -50,29 +48,23 @@ void drawLineSegment(Point start, Point end){
 void drawUnitLineSegment() {
   Point p0 = newPoint(0., 0., 0.);
   Point p1 = newPoint(0., 1., 0.);
-  //Point p1 = translateY(p0, 1.);
-  printf("drawLineSegment(p0, p1);\n");
   drawLineSegment(p0, p1);
   glTranslatef(0., 1., 0.);
 }
 
 void pushTransformations(){
-  printf("glPushMatrix();\n");
   glPushMatrix();
 }
 
 void popTransformations(){
-  printf("glPopMatrix();\n");
   glPopMatrix();
 }
 
 void rotatePosX(){
-  printf("glRotatef( ROT_ANGLE, 1., 0., 0. );\n");
   glRotatef( ROT_ANGLE, 1., 0., 0. );
 }
 
 void rotateNegX(){
-  printf("glRotatef( -ROT_ANGLE, 1., 0., 0. );\n");
   glRotatef( -ROT_ANGLE, 1., 0., 0. );
 }
 
