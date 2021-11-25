@@ -8,6 +8,9 @@
 #include <OpenGL/glu.h>
 #include "glut.h"
 
+float ROT_ANGLE = 60.;
+void drawUnitLineSegment();
+
 typedef struct Point{
 	float x, y, z;		// coordinates
 	// float nx, ny, nz;	// surface normal
@@ -44,45 +47,60 @@ void drawLineSegment(Point start, Point end){
   glEnd( );
 }
 
-void testShape(){
+void drawUnitLineSegment() {
   Point p0 = newPoint(0., 0., 0.);
-  Point p1 = translateY(p0, 1.);
-  
-  //"F"
+  Point p1 = newPoint(0., 1., 0.);
+  //Point p1 = translateY(p0, 1.);
+  printf("drawLineSegment(p0, p1);\n");
   drawLineSegment(p0, p1);
+  glTranslatef(0., 1., 0.);
+}
 
-  // "["
+void pushTransformations(){
+  printf("glPushMatrix();\n");
   glPushMatrix();
-    //"x"
-    glTranslatef(p1.x, p1.y, p1.z);
-    glRotatef( -45., 1., 0., 0. );
-    // "F"
-    drawLineSegment(p0, p1);
-  // "]"
-  glPopMatrix();
+}
 
-  // "X"
-  glPushMatrix();
-    glTranslatef(p1.x, p1.y, p1.z);
-    glRotatef( 45., 1., 0., 0. );
-    drawLineSegment(p0, p1);
+void popTransformations(){
+  printf("glPopMatrix();\n");
   glPopMatrix();
 }
 
+void rotatePosX(){
+  printf("glRotatef( ROT_ANGLE, 1., 0., 0. );\n");
+  glRotatef( ROT_ANGLE, 1., 0., 0. );
+}
+
+void rotateNegX(){
+  printf("glRotatef( -ROT_ANGLE, 1., 0., 0. );\n");
+  glRotatef( -ROT_ANGLE, 1., 0., 0. );
+}
+
 void processSymbol(char symbol){
-  printf("%c", symbol);
   switch(symbol){
     case 'F':
       // Draw a new segment with the current transformation matrix
+      drawUnitLineSegment();
       break;
     case 'B':
       // Draw a new segment with the current transformation matrix
+      drawUnitLineSegment();
       break;
-    case 'x':
+    case '[':
+      // Push matrix onto the stack
+      pushTransformations();
+      break;
+    case ']':
+      // Pop matrix onto the stack
+      popTransformations();
+      break;
+    case '-':
       // Rotate neg x
+      rotateNegX();
       break;
-    case 'X':
+    case '+':
       // Rotate pos x
+      rotatePosX();
       break;
     case 'y':
       // Rotate neg y
@@ -101,10 +119,11 @@ void processSymbol(char symbol){
   }
 }
 
-void drawLSystem(){
-  char* testInstruction = "F[-X][+X]";
+void drawLSystem(char* testInstruction){
+  //char* testInstruction = "F[xB][XB]";
   char * t;    
   for (t = testInstruction; *t != '\0'; t++){
     processSymbol(*t);
   }
 }
+
