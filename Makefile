@@ -1,2 +1,2 @@
-sample:		sample.cpp
-		g++ -framework OpenGL -framework GLUT sample.cpp -o sample -Wno-deprecated
+main:		main.cpp
+		g++ -framework OpenGL -framework GLUT main.cpp -o main -Wno-deprecated

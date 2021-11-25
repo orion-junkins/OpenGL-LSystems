@@ -14,7 +14,7 @@
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include "glut.h"
-
+#include "drawingUtils.h"
 
 //	This is a sample OpenGL / GLUT program
 //
@@ -389,8 +389,18 @@ Display( )
 
 	// draw the current object:
 
-	glCallList( BoxList );
+	
+  Point p1;
+  p1.x = 0;
+  p1.y = 0;
+  p1.z = 0;
 
+  Point p2;
+  p2.x = 1;
+  p2.y = 1;
+  p2.z = 1;
+
+  drawLineSegment(p1, p2);
 
 	// draw some gratuitous text that just rotates on top of the scene:
 
@@ -744,50 +754,7 @@ InitLists( )
 	float dz = BOXSIZE / 2.f;
 	glutSetWindow( MainWindow );
 
-	// create the object:
-
-	BoxList = glGenLists( 1 );
-	glNewList( BoxList, GL_COMPILE );
-
-		glBegin( GL_QUADS );
-
-			glColor3f( 0., 0., 1. );
-				glVertex3f( -dx, -dy,  dz );
-				glVertex3f(  dx, -dy,  dz );
-				glVertex3f(  dx,  dy,  dz );
-				glVertex3f( -dx,  dy,  dz );
-
-				glVertex3f( -dx, -dy, -dz );
-				glVertex3f( -dx,  dy, -dz );
-				glVertex3f(  dx,  dy, -dz );
-				glVertex3f(  dx, -dy, -dz );
-
-			glColor3f( 1., 0., 0. );
-				glVertex3f(  dx, -dy,  dz );
-				glVertex3f(  dx, -dy, -dz );
-				glVertex3f(  dx,  dy, -dz );
-				glVertex3f(  dx,  dy,  dz );
-
-				glVertex3f( -dx, -dy,  dz );
-				glVertex3f( -dx,  dy,  dz );
-				glVertex3f( -dx,  dy, -dz );
-				glVertex3f( -dx, -dy, -dz );
-
-			glColor3f( 0., 1., 0. );
-				glVertex3f( -dx,  dy,  dz );
-				glVertex3f(  dx,  dy,  dz );
-				glVertex3f(  dx,  dy, -dz );
-				glVertex3f( -dx,  dy, -dz );
-
-				glVertex3f( -dx, -dy,  dz );
-				glVertex3f( -dx, -dy, -dz );
-				glVertex3f(  dx, -dy, -dz );
-				glVertex3f(  dx, -dy,  dz );
-
-		glEnd( );
-
-	glEndList( );
-
+	// create the object:=
 
 	// create the axes:
 
