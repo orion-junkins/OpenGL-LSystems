@@ -389,18 +389,7 @@ Display( )
 
 	// draw the current object:
 
-	
-  Point p1;
-  p1.x = 0;
-  p1.y = 0;
-  p1.z = 0;
-
-  Point p2;
-  p2.x = 1;
-  p2.y = 1;
-  p2.z = 1;
-
-  drawLineSegment(p1, p2);
+  drawLSystem();
 
 	// draw some gratuitous text that just rotates on top of the scene:
 

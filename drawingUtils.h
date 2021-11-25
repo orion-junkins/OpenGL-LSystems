@@ -14,8 +14,21 @@ typedef struct Point{
 	// float s, t;		// texture coords
 } Point;
 
+Point newPoint(float a, float b, float c) {
+    Point p = { a, b, c };
+    return p;
+}
+
+Point translateY(Point source, float distance){
+  float x = source.x;
+  float y = source.y + distance;
+  float z = source.z;
+
+  Point p = { x, y, z };
+    return p;
+}
+
 void drawLineSegment(Point start, Point end){
-  printf("In drawing line\n\n");
   glColor3f( 1., 1., 1. );
   glPointSize(6.);
   glLineWidth( 1. );
@@ -29,4 +42,43 @@ void drawLineSegment(Point start, Point end){
     glVertex3f( start.x, start.y, start.z);
     glVertex3f( end.x, end.y, end.z);
   glEnd( );
+}
+
+void testShape(){
+  Point p0 = newPoint(0., 0., 0.);
+  Point p1 = translateY(p0, 1.);
+  
+  //"F"
+  drawLineSegment(p0, p1);
+
+  // "["
+  glPushMatrix();
+    //"x"
+    glTranslatef(p1.x, p1.y, p1.z);
+    glRotatef( -45., 1., 0., 0. );
+    // "F"
+    drawLineSegment(p0, p1);
+  // "]"
+  glPopMatrix();
+
+  // "X"
+  glPushMatrix();
+    glTranslatef(p1.x, p1.y, p1.z);
+    glRotatef( 45., 1., 0., 0. );
+    drawLineSegment(p0, p1);
+  glPopMatrix();
+
+}
+
+void processSymbol(char symbol){
+  printf("%c", symbol);
+  testShape();
+}
+
+void drawLSystem(){
+  char* testInstruction = "F[-X][+X]";
+  char * t;    
+  for (t = testInstruction; *t != '\0'; t++){
+    processSymbol(*t);
+  }
 }
