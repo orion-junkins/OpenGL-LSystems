@@ -67,12 +67,38 @@ void testShape(){
     glRotatef( 45., 1., 0., 0. );
     drawLineSegment(p0, p1);
   glPopMatrix();
-
 }
 
 void processSymbol(char symbol){
   printf("%c", symbol);
-  testShape();
+  switch(symbol){
+    case 'F':
+      // Draw a new segment with the current transformation matrix
+      break;
+    case 'B':
+      // Draw a new segment with the current transformation matrix
+      break;
+    case 'x':
+      // Rotate neg x
+      break;
+    case 'X':
+      // Rotate pos x
+      break;
+    case 'y':
+      // Rotate neg y
+      break;
+    case 'Y':
+      // Rotate pos y
+      break;
+    case 'z':
+      // Rotate neg z
+      break;
+    case 'Z':
+      // Rotate pos z
+      break;
+    default:
+      break;
+  }
 }
 
 void drawLSystem(){
