@@ -68,6 +68,22 @@ void rotateNegX(){
   glRotatef( -ROT_ANGLE, 1., 0., 0. );
 }
 
+void rotatePosY(){
+  glRotatef( ROT_ANGLE, 0., 1., 0. );
+}
+
+void rotateNegY(){
+  glRotatef( -ROT_ANGLE, 0., 1., 0. );
+}
+
+void rotatePosZ(){
+  glRotatef( ROT_ANGLE, 0., 0., 1. );
+}
+
+void rotateNegZ(){
+  glRotatef( -ROT_ANGLE, 0., 0., 1. );
+}
+
 void processSymbol(char symbol){
   switch(symbol){
     case 'F':
@@ -87,24 +103,30 @@ void processSymbol(char symbol){
       popTransformations();
       break;
     case '-':
+    case 'x':
       // Rotate neg x
       rotateNegX();
       break;
     case '+':
+    case 'X':
       // Rotate pos x
       rotatePosX();
       break;
     case 'y':
       // Rotate neg y
+      rotateNegY();
       break;
     case 'Y':
       // Rotate pos y
+      rotatePosY();
       break;
     case 'z':
       // Rotate neg z
+      rotateNegZ();
       break;
     case 'Z':
       // Rotate pos z
+      rotatePosZ();
       break;
     default:
       break;
