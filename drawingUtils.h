@@ -8,7 +8,7 @@
 #include <OpenGL/glu.h>
 #include "glut.h"
 
-float ROT_ANGLE = 60.;
+float ROT_ANGLE = 30.;
 void drawUnitLineSegment();
 
 typedef struct Point{
@@ -133,11 +133,9 @@ void processSymbol(char symbol){
   }
 }
 
-void drawLSystem(char* testInstruction){
-  //char* testInstruction = "F[xB][XB]";
-  char * t;    
-  for (t = testInstruction; *t != '\0'; t++){
-    processSymbol(*t);
+void drawLSystem(string instruction){
+  for (char& curChar : instruction){
+    processSymbol(curChar);
   }
 }
 
