@@ -183,6 +183,9 @@ int		WhichColor;				// index into Colors[ ]
 int		WhichProjection;		// ORTHO or PERSP
 int		Xmouse, Ymouse;			// mouse values
 float	Xrot, Yrot;				// rotation angles in degrees
+float Yview = 0;
+float Xview = 0;
+float Zview = 3;
 
 
 // function prototypes:
@@ -343,7 +346,7 @@ Display( )
 
 	// set the eye position, look-at position, and up-vector:
 
-	gluLookAt( 3., 0., 0.,     0., 0., 0.,     0., 1., 0. );
+	gluLookAt( Xview, Yview, Zview,    (Xview), Yview, (Zview-3.0),     0., 1., 0. );
 
 
 	// rotate the scene:
@@ -783,7 +786,6 @@ Keyboard( unsigned char c, int x, int y )
 
 	switch( c )
 	{
-		case 'o':
 		case 'O':
 			WhichProjection = ORTHO;
 			break;
@@ -798,7 +800,24 @@ Keyboard( unsigned char c, int x, int y )
 		case ESCAPE:
 			DoMainMenu( QUIT );	// will not return here
 			break;				// happy compiler
-
+    case 'w':
+      Yview += 0.4;
+      break; 
+    case 's':
+      Yview -= 0.4;
+      break; 
+    case 'd':
+      Xview += 0.4;
+      break; 
+    case 'a':
+      Xview -= 0.4;
+      break; 
+    case 'o':
+      Zview += 0.4;
+      break; 
+    case 'i':
+      Zview -= 0.4;
+      break; 
 		default:
 			fprintf( stderr, "Don't know what to do with keyboard hit: '%c' (0x%0x)\n", c, c );
 	}
