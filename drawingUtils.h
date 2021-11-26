@@ -102,12 +102,10 @@ void processSymbol(char symbol){
       // Pop matrix onto the stack
       popTransformations();
       break;
-    case '-':
     case 'x':
       // Rotate neg x
       rotateNegX();
       break;
-    case '+':
     case 'X':
       // Rotate pos x
       rotatePosX();
@@ -120,10 +118,12 @@ void processSymbol(char symbol){
       // Rotate pos y
       rotatePosY();
       break;
+    case '-':
     case 'z':
       // Rotate neg z
       rotateNegZ();
       break;
+    case '+':
     case 'Z':
       // Rotate pos z
       rotatePosZ();
