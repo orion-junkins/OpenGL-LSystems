@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string>
+using namespace std;
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -15,10 +17,7 @@
 #include <OpenGL/glu.h>
 #include "glut.h"
 #include "drawingUtils.h"
-
-//char* TEST_INSTRUCTION  = "F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F-F-F++F-F-F-F++F-F++F-F++F-F-F-F++F-F";
-
-char* TEST_INSTRUCTION = "F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F++F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F++F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F-F-F+Z+F-F+Z+F-F+Z+F-F-F-F+Z+F-F";
+#include "grammarParser.h"
 
 //	This is a sample OpenGL / GLUT program
 //
@@ -344,7 +343,7 @@ Display( )
 
 	// set the eye position, look-at position, and up-vector:
 
-	gluLookAt( 0., 0., 3.,     0., 0., 0.,     0., 1., 0. );
+	gluLookAt( 3., 0., 0.,     0., 0., 0.,     0., 1., 0. );
 
 
 	// rotate the scene:
@@ -394,8 +393,6 @@ Display( )
 	// draw the current object:
 
   glCallList( LSysList );
-  //drawLSystem();
-  //testShape();
 
 	// draw some gratuitous text that just rotates on top of the scene:
 
@@ -750,10 +747,20 @@ InitLists( )
 	glutSetWindow( MainWindow );
 
 	// create the object:
+  //F=FF
+  BasePairMap rules;
+  rules['F'] = "FF";
+  rules['X'] = "F-[[X]+X]+F[+FX]-X";
+
+  string input = "X";
+  string output = generateLSysInstruction(input, rules, 5);
+  cout << "Output instruction: " << output << "\n";
+
+
 
   LSysList = glGenLists( 1 );
 	glNewList( LSysList, GL_COMPILE );
-    drawLSystem(TEST_INSTRUCTION);
+    drawLSystem(output);
 	glEndList( );
 	// create the axes:
 

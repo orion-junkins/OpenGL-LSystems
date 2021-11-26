@@ -29,13 +29,3 @@ string generateLSysInstruction(string inputSeq, BasePairMap rules, int recursion
   string finalSeq = generateLSysInstruction(nextSeq, rules, nextRecursionDepth);
   return finalSeq;
 }
-
-int main()
-{
-    BasePairMap rules;
-    rules['X'] = "F[-X][+X]";
-    string input = "XX";
-    string output = generateLSysInstruction(input, rules, 3);
-    cout << output << "\n";
-    return 0;
-}
