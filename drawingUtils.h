@@ -39,10 +39,10 @@ void drawLineSegment(Point start, Point end){
     glVertex3f( end.x, end.y, end.z);
   glEnd( );
 
-  glBegin( GL_POINTS );
-    glVertex3f( start.x, start.y, start.z);
-    glVertex3f( end.x, end.y, end.z);
-  glEnd( );
+  // glBegin( GL_POINTS );
+  //   glVertex3f( start.x, start.y, start.z);
+  //   glVertex3f( end.x, end.y, end.z);
+  // glEnd( );
 }
 
 void drawUnitLineSegment() {
