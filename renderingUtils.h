@@ -355,12 +355,6 @@ Display( )
 
   glCallList( LSysList );
 
-	// draw some gratuitous text that just rotates on top of the scene:
-
-	glDisable( GL_DEPTH_TEST );
-	glColor3f( 0., 1., 1. );
-	DoRasterString( 0., 1., 0., (char *)"Text That Moves" );
-
 
 	// draw some gratuitous text that is fixed on the screen:
 	//
@@ -379,7 +373,7 @@ Display( )
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity( );
 	glColor3f( 1., 1., 1. );
-	DoRasterString( 5., 5., 0., (char *)"Text That Doesn't" );
+	// DoRasterString( 5., 5., 0., (char *)"Text That Doesn't" );
 
 
 	// swap the double-buffered framebuffers:
