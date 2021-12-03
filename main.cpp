@@ -5,10 +5,12 @@ int
 main( int argc, char *argv[ ] )
 {
   BasePairMap rules;
-  rules['F'] = "FF-[-F+F+F]+[+F-F-F]";
 
-  string input = "F";
-  string instructionString = generateLSysInstruction(input, rules, 5);
+  string input = "F[G]";
+  rules['F'] = "|[--F][+F][-F]";
+  rules['G'] = "y|[--F][+F][-F]";
+
+  string instructionString = generateLSysInstruction(input, rules, 6);
   cout << "Output instruction: " << instructionString << "\n";
 
 	// turn on the glut package:

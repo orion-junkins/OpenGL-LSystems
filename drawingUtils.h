@@ -8,7 +8,9 @@
 #include <OpenGL/glu.h>
 #include "glut.h"
 
-float ROT_ANGLE = 30.;
+float ROT_ANGLE = 20.;
+float RECURSION_DEPTH = 1.;
+float DEPTH_SCALE_FACTOR = 0.75;
 void drawUnitLineSegment();
 
 typedef struct Point{
@@ -44,12 +46,23 @@ void drawLineSegment(Point start, Point end){
   //   glVertex3f( end.x, end.y, end.z);
   // glEnd( );
 }
+void drawDepthScaledLineSegment();
 
 void drawUnitLineSegment() {
+  drawDepthScaledLineSegment();
+  return;
   Point p0 = newPoint(0., 0., 0.);
   Point p1 = newPoint(0., 1., 0.);
   drawLineSegment(p0, p1);
   glTranslatef(0., 1., 0.);
+}
+
+void drawDepthScaledLineSegment() {
+  float segment_length = pow(DEPTH_SCALE_FACTOR, RECURSION_DEPTH);
+  Point p0 = newPoint(0., 0., 0.);
+  Point p1 = newPoint(0., segment_length, 0.);
+  drawLineSegment(p0, p1);
+  glTranslatef(0., segment_length, 0.);
 }
 
 void pushTransformations(){
@@ -97,10 +110,15 @@ void processSymbol(char symbol){
     case '[':
       // Push matrix onto the stack
       pushTransformations();
+      // Update recursion Depth
+      RECURSION_DEPTH += 1;
       break;
     case ']':
       // Pop matrix onto the stack
       popTransformations();
+
+      // Update recursion depth
+      RECURSION_DEPTH -= 1;
       break;
     case 'x':
       // Rotate neg x
@@ -128,7 +146,12 @@ void processSymbol(char symbol){
       // Rotate pos z
       rotatePosZ();
       break;
+    case '|':
+      // Draw a line segment scaled to the current recursion depth
+      drawDepthScaledLineSegment();
+      break;
     default:
+      drawDepthScaledLineSegment();
       break;
   }
 }
