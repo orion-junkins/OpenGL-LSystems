@@ -1,17 +1,15 @@
+#include <string>
 #include "renderingUtils.h"
-#include "grammarParser.h"
+#include "LSystem.h"
 
-int
-main( int argc, char *argv[ ] )
+int main( int argc, char *argv[ ] )
 {
-  BasePairMap rules;
-
-  string input = "F[G]";
-  rules['F'] = "|[--F][+F][-F]";
-  rules['G'] = "y|[--F][+F][-F]";
-
-  string instructionString = generateLSysInstruction(input, rules, 6);
-  cout << "Output instruction: " << instructionString << "\n";
+    std::string axiom = "F";
+    LSystem sys(axiom, 3, 1.0, 1.0);
+    sys.addRule('F', "F[-F][+F]");
+    sys.generateInstruction();
+    string instructionString = sys.m_instruction;
+    cout << "Output instruction: " << instructionString << "\n";
 
 	// turn on the glut package:
 	// (do this before checking argc and argv since it might
