@@ -5,11 +5,9 @@
 int main( int argc, char *argv[ ] )
 {
     std::string axiom = "F";
-    LSystem sys(axiom, 3, 1.0, 1.0);
-    sys.addRule('F', "F[-F][+F]");
-    sys.generateInstruction();
-    string instructionString = sys.m_instruction;
-    cout << "Output instruction: " << instructionString << "\n";
+    LSystem system(axiom, 4, 20.0, 0.65);
+    system.addRule('F', "|[--F][+F][-F][y--F][y+F][y-F][yy--F][yy+F][yy-F][yyy--F][yyy+F][yyy-F]");
+    system.generateInstruction();
 
 	// turn on the glut package:
 	// (do this before checking argc and argv since it might
@@ -23,7 +21,7 @@ int main( int argc, char *argv[ ] )
 
 	// create the display structures that will not change:
 
-	InitLists(instructionString);
+	InitLists(system);
 
 	// init all the global variables used by Display( ):
 	// this will also post a redisplay

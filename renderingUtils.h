@@ -16,7 +16,7 @@ using namespace std;
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include "glut.h"
-#include "drawingUtils.h"
+#include "LSystem.h"
 
 //	This is a sample OpenGL / GLUT program
 //
@@ -694,7 +694,7 @@ InitGraphics( )
 //  with a call to glCallList( )
 
 void
-InitLists(string instructionString)
+InitLists(LSystem system)
 {
 	float dx = BOXSIZE / 2.f;
 	float dy = BOXSIZE / 2.f;
@@ -704,7 +704,7 @@ InitLists(string instructionString)
 	// create the object:
   LSysList = glGenLists( 1 );
 	glNewList( LSysList, GL_COMPILE );
-    drawLSystem(instructionString);
+        system.draw();
 	glEndList( );
 	// create the axes:
 
