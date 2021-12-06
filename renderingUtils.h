@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string>
+#include <vector>
 using namespace std;
 
 #define _USE_MATH_DEFINES
@@ -204,7 +205,7 @@ void	DoRasterString( float, float, float, char * );
 void	DoStrokeString( float, float, float, float, char * );
 float	ElapsedSeconds( );
 void	InitGraphics( );
-void	InitLists( );
+void	InitLists(vector<LSystem> demoSystems);
 void	InitMenus( );
 void	Keyboard( unsigned char, int, int );
 void	MouseButton( int, int, int, int );
@@ -694,7 +695,7 @@ InitGraphics( )
 //  with a call to glCallList( )
 
 void
-InitLists(LSystem system)
+InitLists(vector<LSystem> demoSystems)
 {
 	float dx = BOXSIZE / 2.f;
 	float dy = BOXSIZE / 2.f;
@@ -702,9 +703,10 @@ InitLists(LSystem system)
 	glutSetWindow( MainWindow );
 
 	// create the object:
-  LSysList = glGenLists( 1 );
+    LSystem curSystem = demoSystems[0];
+    LSysList = glGenLists( 1 );
 	glNewList( LSysList, GL_COMPILE );
-        system.draw();
+        curSystem.draw();
 	glEndList( );
 	// create the axes:
 

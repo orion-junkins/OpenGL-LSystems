@@ -41,7 +41,7 @@ void LSystem::generateInstruction()
 
 void LSystem::drawLineSegment(Point start, Point end)
 {
-    glColor3f( 0.8, 0.4, 0.2 );
+    glColor3f( 1., 1., 1. );
     glLineWidth( 2. );
 
     glBegin( GL_LINE_STRIP );
