@@ -175,7 +175,7 @@ int		DebugOn;				// != 0 means to print debugging info
 int		DepthCueOn;				// != 0 means to use intensity depth cueing
 int		DepthBufferOn;			// != 0 means to use the z-buffer
 int		DepthFightingOn;		// != 0 means to force the creation of z-fighting
-GLuint	LSysList;				// object display list
+GLuint	LSysLists[10];				// object display lists
 int		MainWindow;				// window id for main graphics window
 float	Scale;					// scaling factor
 int		ShadowsOn;				// != 0 means to turn shadows on
@@ -186,6 +186,9 @@ float	Xrot, Yrot;				// rotation angles in degrees
 float Yview = 0;
 float Xview = 0;
 float Zview = 3;
+
+// Which LSystem to Render
+int LSystemIndex = 0;
 
 
 // function prototypes:
@@ -205,7 +208,7 @@ void	DoRasterString( float, float, float, char * );
 void	DoStrokeString( float, float, float, float, char * );
 float	ElapsedSeconds( );
 void	InitGraphics( );
-void	InitLists(vector<LSystem> demoSystems);
+void	InitLists(vector<LSystem> demoSystems, int numSystems);
 void	InitMenus( );
 void	Keyboard( unsigned char, int, int );
 void	MouseButton( int, int, int, int );
@@ -353,8 +356,7 @@ Display( )
 
 
 	// draw the current object:
-
-  glCallList( LSysList );
+  glCallList( LSysLists[LSystemIndex] );
 
 
 	// draw some gratuitous text that is fixed on the screen:
@@ -695,19 +697,25 @@ InitGraphics( )
 //  with a call to glCallList( )
 
 void
-InitLists(vector<LSystem> demoSystems)
+InitLists(vector<LSystem> demoSystems, int numSystems)
 {
 	float dx = BOXSIZE / 2.f;
 	float dy = BOXSIZE / 2.f;
 	float dz = BOXSIZE / 2.f;
 	glutSetWindow( MainWindow );
 
-	// create the object:
-    LSystem curSystem = demoSystems[0];
-    LSysList = glGenLists( 1 );
-	glNewList( LSysList, GL_COMPILE );
-        curSystem.draw();
-	glEndList( );
+	// create the objects:
+    for (int i = 0; i < numSystems; i++) // access by reference to avoid copying
+    {  
+        LSysLists[i] = glGenLists( 1 );
+        glNewList( LSysLists[i], GL_COMPILE );
+            demoSystems[i].draw();
+        glEndList( ); 
+    }
+
+
+
+    
 	// create the axes:
 
 	AxesList = glGenLists( 1 );
@@ -729,38 +737,44 @@ Keyboard( unsigned char c, int x, int y )
 
 	switch( c )
 	{
-		case 'O':
-			WhichProjection = ORTHO;
-			break;
+        case 'O':
+            WhichProjection = ORTHO;
+            break;
 
-		case 'p':
-		case 'P':
-			WhichProjection = PERSP;
-			break;
+        case 'p':
+        case 'P':
+            WhichProjection = PERSP;
+            break;
 
-		case 'q':
-		case 'Q':
-		case ESCAPE:
-			DoMainMenu( QUIT );	// will not return here
-			break;				// happy compiler
-    case 'w':
-      Yview += 0.4;
-      break; 
-    case 's':
-      Yview -= 0.4;
-      break; 
-    case 'd':
-      Xview += 0.4;
-      break; 
-    case 'a':
-      Xview -= 0.4;
-      break; 
-    case 'o':
-      Zview += 0.4;
-      break; 
-    case 'i':
-      Zview -= 0.4;
-      break; 
+        case 'q':
+        case 'Q':
+        case ESCAPE:
+            DoMainMenu( QUIT );	// will not return here
+            break;				// happy compiler
+        case 'w':
+            Yview += 0.4;
+            break; 
+        case 's':
+            Yview -= 0.4;
+            break; 
+        case 'd':
+            Xview += 0.4;
+            break; 
+        case 'a':
+            Xview -= 0.4;
+            break; 
+        case 'o':
+            Zview += 0.4;
+            break; 
+        case 'i':
+            Zview -= 0.4;
+            break; 
+        case '0':
+            LSystemIndex = 0;
+            break;
+        case '1':
+            LSystemIndex = 1;
+
 		default:
 			fprintf( stderr, "Don't know what to do with keyboard hit: '%c' (0x%0x)\n", c, c );
 	}
