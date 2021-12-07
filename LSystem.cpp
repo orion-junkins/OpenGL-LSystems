@@ -125,11 +125,6 @@ void LSystem::processSymbol(char symbol)
             m_recursion_depth += 1;
             break;
         case ']':
-            glPointSize(4.);
-            glColor3f(0., 1., 0.);
-            glBegin( GL_POINTS );
-              glVertex3f( 0., 0., 0.);
-            glEnd( );
             // Pop matrix onto the stack
             popTransformations();
             // Update recursion depth

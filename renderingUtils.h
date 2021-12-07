@@ -187,6 +187,9 @@ float Yview = 0;
 float Xview = 0;
 float Zview = 3;
 
+// Set of demo L-Systems
+vector<LSystem> demoSystems;
+
 // Which LSystem to Render
 int LSystemIndex = 0;
 
@@ -208,7 +211,8 @@ void	DoRasterString( float, float, float, char * );
 void	DoStrokeString( float, float, float, float, char * );
 float	ElapsedSeconds( );
 void	InitGraphics( );
-void	InitLists(vector<LSystem> demoSystems, int numSystems);
+void	InitLSystemLists(vector<LSystem> demoSystems);
+void	InitLists();
 void	InitMenus( );
 void	Keyboard( unsigned char, int, int );
 void	MouseButton( int, int, int, int );
@@ -696,15 +700,22 @@ InitGraphics( )
 //  memory so that they can be played back efficiently at a later time
 //  with a call to glCallList( )
 
+void InitLSystemLists(vector<LSystem> systems) 
+{
+    demoSystems = systems;
+    InitLists();
+}
+
 void
-InitLists(vector<LSystem> demoSystems, int numSystems)
+InitLists()
 {
 	float dx = BOXSIZE / 2.f;
 	float dy = BOXSIZE / 2.f;
 	float dz = BOXSIZE / 2.f;
 	glutSetWindow( MainWindow );
 
-	// create the objects:
+    // create the objects:
+    int numSystems = demoSystems.size();
     for (int i = 0; i < numSystems; i++) // access by reference to avoid copying
     {  
         LSysLists[i] = glGenLists( 1 );
@@ -713,9 +724,6 @@ InitLists(vector<LSystem> demoSystems, int numSystems)
         glEndList( ); 
     }
 
-
-
-    
 	// create the axes:
 
 	AxesList = glGenLists( 1 );
@@ -732,9 +740,7 @@ InitLists(vector<LSystem> demoSystems, int numSystems)
 void
 Keyboard( unsigned char c, int x, int y )
 {
-	if( DebugOn != 0 )
-		fprintf( stderr, "Keyboard: '%c' (0x%0x)\n", c, c );
-
+    int maxIndex = ((int)demoSystems.size()) - 1; // Grab max L Systemsystem index
 	switch( c )
 	{
         case 'O':
@@ -773,10 +779,34 @@ Keyboard( unsigned char c, int x, int y )
             LSystemIndex = 0;
             break;
         case '1':
-            LSystemIndex = 1;
-
+            LSystemIndex = min(1, maxIndex);
+            break;
+        case '2':
+            LSystemIndex = min(2, maxIndex);
+            break;
+        case '3':
+            LSystemIndex = min(3, maxIndex);
+            break;
+        case '4':
+            LSystemIndex = min(4, maxIndex);
+            break;
+        case '5':
+            LSystemIndex = min(5, maxIndex);
+            break;
+        case '6':
+            LSystemIndex = min(6, maxIndex);
+            break;
+        case '7':
+            LSystemIndex = min(7, maxIndex);
+            break;
+        case '8':
+            LSystemIndex = min(8, maxIndex);
+            break;
+        case '9':
+            LSystemIndex = min(9, maxIndex);
+            break;
 		default:
-			fprintf( stderr, "Don't know what to do with keyboard hit: '%c' (0x%0x)\n", c, c );
+			cout << "Don't know what to do with keyboard hit: "<< c << endl;
 	}
 
 	// force a call to Display( ):

@@ -21,7 +21,7 @@ int main( int argc, char *argv[ ] )
 
 	// create the display structures that will not change:
 
-	InitLists(demoSystems, 2);
+	InitLSystemLists(demoSystems);
 
 	// init all the global variables used by Display( ):
 	// this will also post a redisplay
