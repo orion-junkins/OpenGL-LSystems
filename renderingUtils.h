@@ -709,9 +709,6 @@ void InitLSystemLists(vector<LSystem> systems)
 void
 InitLists()
 {
-	float dx = BOXSIZE / 2.f;
-	float dy = BOXSIZE / 2.f;
-	float dz = BOXSIZE / 2.f;
 	glutSetWindow( MainWindow );
 
     // create the objects:
